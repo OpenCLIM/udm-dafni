@@ -1,0 +1,42 @@
+kind: Model
+apiVersion: v1alpha4
+metadata:
+  displayName: OpenUDM
+  type: Modelling
+  name: openudm
+  summary: >
+    OpenUDM is a grid cell-based model which explores where future urban development might take place, subject to
+    attractors, constraints and variable density of development.
+  description: >
+    OpenUDM has been used in a number of contexts to explore urban development scenarios.
+    For example, this interactive article about urban development in the Oxford-Cambridge Arc introduces the modelling
+    process and analyses the potential impacts of future development on the natural environment.
+    Alistair Ford, Stuart Barr, Richard Dawson, James Virgo, Michael Batty, Jim Hall (2019) A multi-scale urban
+    integrated assessment framework for climate change studies: A flooding application. Computers, Environment and
+    Urban Systems. 75, 229-243. https://doi.org/10.1016/j.compenvurbsys.2019.02.005.
+spec:
+  inputs:
+    env:
+      - name: PLACEHOLDER
+        title: Placeholder
+        desc: Placeholder
+        type: number
+        default: 100
+        min: 100
+        max: 100
+
+    dataslots:
+      - name: Input data
+        description: Input data
+        default:
+          - uid: 79bab37a-8e17-4795-a90f-67a67b869af6
+            versionUid: 4a114f3d-8c6a-417a-af8b-f901be465663
+        path: inputs/data
+        required: true
+
+
+  outputs:
+    datasets:
+      - name: inputs/data/**/*
+        type: folder
+        desc: path to model outputs
