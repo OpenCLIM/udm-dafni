@@ -1,18 +1,15 @@
 name: build
-on:
-  push:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: build image
+      - name: Build image
         run: docker build -t udm-dafni .
 
-      - name: test
+      - name: Test
         run: docker run -v $PWD/data:/data --name udm-dafni udm-dafni
