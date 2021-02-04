@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - rose/add-dafni-upload-workflow
 
 jobs:
   publish-simple-example-image:
