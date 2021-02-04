@@ -7,8 +7,8 @@ on:
       - rose/add-dafni-upload-workflow
 
 jobs:
-  publish-simple-example-image:
-    name: Publish Simple Example Image
+  publish-udm:
+    name: Publish UDM to DAFNI
     runs-on: ubuntu-latest
     steps:
     -
