@@ -1,11 +1,10 @@
 name: Upload to dafni
 
 on:
-  push:
-    branches:
-      - main
-      - rose/add-dafni-upload-workflow
+  release:
+   types: [published]
 
+   
 jobs:
   publish-udm:
     name: Publish UDM to DAFNI
@@ -22,13 +21,16 @@ jobs:
       run: |
         docker save udm-dafni:latest |
         gzip > udm-dafni.tar.gz
+    - 
+      name: Set tag as env
+      run: echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
     -
       name: Upload To DAFNI
       uses: dafnifacility/dafni-model-uploader@v1.4
       with:
         definition-path: './model_definition.yaml'
         image-path: './udm-dafni.tar.gz'
-        username: 'model-uploader'
+        username: ${{ secrets.DAFNI_SERVICE_ACCOUNT_USERNAME }}
         password: ${{ secrets.DAFNI_SERVICE_ACCOUNT_PASSWORD }}
-        version-message: "Uploaded from GitHub workflow"
+        version-message: ${{ env.TAG }}
         parent-model: "9a5857c0-808d-4328-ad4a-bd27b4240bb6"
