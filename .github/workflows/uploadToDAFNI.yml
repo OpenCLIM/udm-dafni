@@ -1,0 +1,33 @@
+name: Upload to dafni
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-simple-example-image:
+    name: Publish Simple Example Image
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Checkout code
+      uses: actions/checkout@v2
+    -
+      name: Docker Build
+        run: docker build -t udm-dafni .
+    -
+      name: Compress docker image
+      run: |
+        docker save -o udm-dafni.tar udm-dafni
+        gzip udm-dafni.tar
+    -
+      name: Upload To DAFNI
+      uses: dafnifacility/dafni-model-uploader@v1.4
+      with:
+        definition-path: './model_definition.yaml'
+        image-path: './udm-dafni.tar.gz'
+        username: 'model-uploader'
+        password: ${{ secrets.DAFNI_SERVICE_ACCOUNT_PASSWORD }}
+        version-message: "Uploaded from GitHub workflow"
+        parent-model: "9a5857c0-808d-4328-ad4a-bd27b4240bb6"
