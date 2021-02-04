@@ -20,8 +20,8 @@ jobs:
     -
       name: Compress docker image
       run: |
-        docker save -o udm-dafni.tar udm-dafni
-        gzip udm-dafni.tar
+        docker save udm-dafni:latest |
+        gzip > udm-dafni.tar.gz
     -
       name: Upload To DAFNI
       uses: dafnifacility/dafni-model-uploader@v1.4
