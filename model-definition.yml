@@ -30,7 +30,7 @@ spec:
         description: Input data
         default:
           - uid: 79bab37a-8e17-4795-a90f-67a67b869af6
-            versionUid: 4a114f3d-8c6a-417a-af8b-f901be465663
+            versionUid: f776c8ba-ad8f-44eb-966d-9c357eaf3ced
         path: inputs/data
         required: true
 
