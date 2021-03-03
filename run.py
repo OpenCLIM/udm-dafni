@@ -4,7 +4,7 @@ os.system('python -m openudm /data/inputs/data')
 
 # move files to output dir
 result_data_dir = '/data/inputs/data'
-output_data_dir = '/data/ouputs/data'
+output_data_dir = '/data/outputs/data'
 
 # make output dir if not exists
 os.makedirs(output_data_dir, exist_ok=True)
