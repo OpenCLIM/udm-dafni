@@ -17,6 +17,6 @@ metadata:
 spec:
   outputs:
     datasets:
-      - name: inputs/data/**/*
+      - name: outputs/data/
         type: folder
         desc: path to model outputs
