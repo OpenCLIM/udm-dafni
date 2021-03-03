@@ -8,4 +8,6 @@ WORKDIR /src
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python", "-m", "openudm", "/data/inputs/data"]
+COPY run.py .
+
+ENTRYPOINT ["python", "run.py"]
