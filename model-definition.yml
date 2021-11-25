@@ -1,12 +1,13 @@
 kind: Model
-apiVersion: v1alpha4
+api_version: v1beta1
 metadata:
-  displayName: OpenUDM
-  type: Modelling
+  display_name: OpenUDM
   name: openudm
+  publisher: Newcastle University
   summary: >
     OpenUDM is a grid cell-based model which explores where future urban development might take place, subject to
     attractors, constraints and variable density of development.
+  source_code: https://github.com/OpenCLIM/udm-dafni
   description: >
     OpenUDM has been used in a number of contexts to explore urban development scenarios.
     For example, this interactive article about urban development in the Oxford-Cambridge Arc introduces the modelling
@@ -25,4 +26,4 @@ spec:
     datasets:
       - name: outputs/data/
         type: folder
-        desc: path to model outputs
+        description: path to model outputs
