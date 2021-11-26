@@ -20,7 +20,7 @@ spec:
     dataslots:
       - name: Input data
         description: Input data
-        path: inputs/data
+        path: inputs
         required: false
   outputs:
     datasets:
