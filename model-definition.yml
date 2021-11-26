@@ -17,6 +17,14 @@ metadata:
     Urban Systems. 75, 229-243. https://doi.org/10.1016/j.compenvurbsys.2019.02.005.
 spec:
   inputs:
+    parameters:
+      - name: TITLE
+        title: Title
+        type: string
+        description: The title given to the output dataset
+        default: OpenUDM output
+        required: false
+
     dataslots:
       - name: Input data
         description: Input data
