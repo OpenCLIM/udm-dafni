@@ -4,6 +4,35 @@ import subprocess
 import datetime
 subprocess.run(['python', '-m',  'openudm', '/data/inputs'])
 
+from os import getenv, walk, mkdir, remove, listdir
+from os.path import join, isdir, isfile
+
+def find_files():
+    """
+    Search all directories for any input files
+    """
+
+    suitable_extension_types = ['asc', 'tiff', 'geotiff', 'gpkg', 'csv']
+
+    input_files = []
+
+    for root, dirs, files in walk('/data'):
+        print(root, files)
+        for file in files:
+
+            # check if extension acceptable
+            #extension = file.split('.')[-1]
+            #if extension in suitable_extension_types:
+                # file is good and what we are looking for
+            input_files.append(join(file))
+
+    print(input_files)
+    return input_files
+
+
+print(find_files())
+
+
 # move files to output dir
 result_data_dir = '/data/inputs'
 output_data_dir = '/data/outputs/data'
@@ -24,45 +53,3 @@ urban_fabric_raster = os.path.join(output_data_dir, 'out_uf.asc')
 subprocess.run(['generate_urban_fabric', '-i', '/data/inputs/out_cell_dph.asc', '-o', urban_fabric_raster])
 subprocess.run(['raster_to_vector', '-i', urban_fabric_raster, '-o',
                 os.path.join(buildings_data_dir, "urban_fabric.gpkg"), '-f' 'buildings'])
-
-title = os.getenv('TITLE', 'OpenUDM output')
-description = ' '
-geojson = {}
-
-metadata = f"""{{
-  "@context": ["metadata-v1"],
-  "@type": "dcat:Dataset",
-  "dct:language": "en",
-  "dct:title": "{title}",
-  "dct:description": "{description}",
-  "dcat:keyword": [
-    "citycat"
-  ],
-  "dct:subject": "Environment",
-  "dct:license": {{
-    "@type": "LicenseDocument",
-    "@id": "https://creativecommons.org/licences/by/4.0/",
-    "rdfs:label": null
-  }},
-  "dct:creator": [{{"@type": "foaf:Organization"}}],
-  "dcat:contactPoint": {{
-    "@type": "vcard:Organization",
-    "vcard:fn": "DAFNI",
-    "vcard:hasEmail": "support@dafni.ac.uk"
-  }},
-  "dct:created": "{datetime.datetime.now().isoformat()}Z",
-  "dct:PeriodOfTime": {{
-    "type": "dct:PeriodOfTime",
-    "time:hasBeginning": null,
-    "time:hasEnd": null
-  }},
-  "dafni_version_note": "created",
-  "dct:spatial": {{
-    "@type": "dct:Location",
-    "rdfs:label": null
-  }},
-  "geojson": {geojson}
-}}
-"""
-with open(os.path.join('/data/outputs/metadata.json'), 'w') as f:
-    f.write(metadata)
