@@ -52,4 +52,4 @@ os.makedirs(buildings_data_dir, exist_ok=True)
 urban_fabric_raster = os.path.join(output_data_dir, 'out_uf.asc')
 subprocess.run(['generate_urban_fabric', '-i', '/data/inputs/out_cell_dph.asc', '-o', urban_fabric_raster])
 subprocess.run(['raster_to_vector', '-i', urban_fabric_raster, '-o',
-                os.path.join(buildings_data_dir, "urban_fabric.gpkg"), '-f' 'buildings'])
+                os.path.join(buildings_data_dir, "urban_fabric.gpkg"), '-f' 'buildings,raods,greenspace'])
