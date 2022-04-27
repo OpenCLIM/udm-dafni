@@ -2,10 +2,13 @@ import os
 from shutil import copyfile
 import subprocess
 import datetime
+
+# run UDM
 subprocess.run(['python', '-m',  'openudm', '/data/inputs'])
 
 from os import getenv, walk, mkdir, remove, listdir
 from os.path import join, isdir, isfile
+
 
 def find_files():
     """
@@ -47,9 +50,12 @@ for file_name in files_to_copy:
     copyfile(os.path.join(result_data_dir, file_name), os.path.join(output_data_dir, file_name))
 
 
+# run urban fabric generator tool
 # make output dir if not exists
 os.makedirs(buildings_data_dir, exist_ok=True)
 urban_fabric_raster = os.path.join(output_data_dir, 'out_uf.asc')
 subprocess.run(['generate_urban_fabric', '-i', '/data/inputs/out_cell_dph.asc', '-o', urban_fabric_raster])
+
+# run raster to vector tool
 subprocess.run(['raster_to_vector', '-i', urban_fabric_raster, '-o',
-                os.path.join(buildings_data_dir, "urban_fabric.gpkg"), '-f' 'buildings,raods,greenspace'])
+                os.path.join(buildings_data_dir, "urban_fabric.gpkg"), '-f' 'buildings,roads,greenspace'])
