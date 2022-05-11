@@ -2,12 +2,27 @@ import os
 from shutil import copyfile
 import subprocess
 import datetime
+from zipfile import ZipFile
 
 # run UDM
 subprocess.run(['python', '-m',  'openudm', '/data/inputs'])
+print('*** Ran UDM ***')
 
 from os import getenv, walk, mkdir, remove, listdir
 from os.path import join, isdir, isfile
+
+
+def zip_file(path, file):
+    """
+    Zips a file and deletes the un-archived version
+    """
+    zipObj = ZipFile(f'{join(path,file)}.zip', 'w')
+    zipObj.write(join(path,file))
+
+    zipObj.close()
+
+    os.remove(join(path, file))
+    return
 
 
 def find_files():
@@ -32,7 +47,7 @@ def find_files():
     print(input_files)
     return input_files
 
-
+print('*** Output files ***')
 print(find_files())
 
 
@@ -49,6 +64,7 @@ files_to_copy = ['out_cell_dev.asc', 'out_cell_pph.asc', 'out_cell_dph.asc', 'ou
 for file_name in files_to_copy:
     copyfile(os.path.join(result_data_dir, file_name), os.path.join(output_data_dir, file_name))
 
+print('*** Moved UDM output files ***')
 
 # run urban fabric generator tool
 # make output dir if not exists
@@ -56,6 +72,13 @@ os.makedirs(buildings_data_dir, exist_ok=True)
 urban_fabric_raster = os.path.join(output_data_dir, 'out_uf.asc')
 subprocess.run(['generate_urban_fabric', '-i', '/data/inputs/out_cell_dph.asc', '-o', urban_fabric_raster])
 
+print('*** Ran UFG ***')
+
 # run raster to vector tool
 subprocess.run(['raster_to_vector', '-i', urban_fabric_raster, '-o',
                 os.path.join(buildings_data_dir, "urban_fabric.gpkg"), '-f' 'buildings,roads,greenspace'])
+
+# to save disk space, zip out_uf.asc and delete the raw file
+zip_file(output_data_dir, 'out_uf.asc')
+
+print('*** Ran R2V ***')
