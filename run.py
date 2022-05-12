@@ -75,8 +75,18 @@ subprocess.run(['generate_urban_fabric', '-i', '/data/outputs/data/out_cell_dph.
 print('*** Ran UFG ***')
 
 # run raster to vector tool
-subprocess.run(['raster_to_vector', '-i', urban_fabric_raster, '-o',
+subprocess.run(['raster_to_vector', '-i', '/data/outputs/data/out_uf.asc', '-o',
                 os.path.join(buildings_data_dir, "urban_fabric.gpkg"), '-f' 'buildings,roads,greenspace'])
+
+# in an old version the data is stored in the wrong place. zip into a suitable output location
+zipObj = ZipFile('/data/outputs/data/urban_fabric.zip', 'w')
+zipObj.write('/src/buildings.gpkg')
+zipObj.write('/src/roads.gpkg')
+zipObj.write('/src/greenspace.gpkg')
+zipObj.close()
+os.remove('/src/buildings.gpkg')
+os.remove('/src/roads.gpkg')
+os.remove('/src/greenspace.gpkg')
 
 # to save disk space, zip out_uf.asc and delete the raw file
 zip_file(output_data_dir, 'out_uf.asc')
