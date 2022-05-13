@@ -80,13 +80,18 @@ subprocess.run(['raster_to_vector', '-i', '/data/outputs/data/out_uf.asc', '-o',
 
 # in an old version the data is stored in the wrong place. zip into a suitable output location
 zipObj = ZipFile('/data/outputs/data/urban_fabric.zip', 'w')
-zipObj.write('/src/buildings.gpkg')
-zipObj.write('/src/roads.gpkg')
-zipObj.write('/src/greenspace.gpkg')
+
+print('searching for output')
+for root, dirs, files in walk('/'):
+    #print(root, files)
+    for file in files:
+        file_extension = file.split('.')[-1]
+        if file_extension == 'gpkg':
+            if 'buildings.gpkg' or 'roads.gpkg' or 'greenspace.gpkg' or 'urban_fabric.gpkg' in file:
+                print(join(root, file))
+                zipObj.write(join(root, file))
+                os.remove(join(root, file))
 zipObj.close()
-os.remove('/src/buildings.gpkg')
-os.remove('/src/roads.gpkg')
-os.remove('/src/greenspace.gpkg')
 
 # to save disk space, zip out_uf.asc and delete the raw file
 zip_file(output_data_dir, 'out_uf.asc')
