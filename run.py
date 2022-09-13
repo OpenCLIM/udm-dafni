@@ -60,7 +60,7 @@ buildings_data_dir = '/data/outputs/buildings'
 os.makedirs(output_data_dir, exist_ok=True)
 
 # copy the listed output files to the output location
-files_to_copy = ['out_cell_dev.asc', 'out_cell_pph.asc', 'out_cell_dph.asc', 'out_cell_suit.asc']
+files_to_copy = ['out_cell_dev.asc', 'out_cell_pph.asc', 'out_cell_dph.asc', 'out_cell_suit.asc', 'out_cell_overflow.csv']
 for file_name in files_to_copy:
     copyfile(os.path.join(result_data_dir, file_name), os.path.join(output_data_dir, file_name))
 
