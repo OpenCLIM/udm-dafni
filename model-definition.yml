@@ -29,7 +29,7 @@ spec:
         type: boolean
         description: Set as true to run the urban fabric generator tool
         default: false
-        retuired: true
+        required: true
 
     dataslots:
       - name: Input data
