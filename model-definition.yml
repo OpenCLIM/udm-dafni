@@ -24,6 +24,12 @@ spec:
         description: The title given to the output dataset
         default: OpenUDM output
         required: false
+      - name: RUN_UFG
+        title: Run UFG
+        type: boolean
+        description: Set as true to run the urban fabric generator tool
+        default: false
+        retuired: true
 
     dataslots:
       - name: Input data
