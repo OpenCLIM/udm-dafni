@@ -3,6 +3,7 @@ from shutil import copyfile
 import subprocess
 import datetime
 from zipfile import ZipFile
+import pandas as pd
 
 from os import getenv, walk, mkdir, remove, listdir
 from os.path import join, isdir, isfile
