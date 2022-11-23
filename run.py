@@ -95,7 +95,7 @@ print('Saving metadata file')
 if len(metadata_files) == 1: # if one metadata file found
     df = pd.read_csv(metadata_files[0]) # read in the file into a dataframe
     print(df.head())
-    df.to_csv(join(data_path, output_dir, 'metadata.csv')) # write datadrame to csv
+    df.to_csv(join(output_dir, 'metadata.csv')) # write datadrame to csv
     
     # set some parameters which can be used later
     year = df.loc[df['PARAMETER'] == 'YEAR', 'VALUE']
