@@ -90,8 +90,14 @@ ssp = None
 print('Saving metadata file')
 if len(metadata_files) == 1: # if one metadata file found
     df = pd.read_csv(metadata_files[0]) # read in the file into a dataframe
-    #print(df.head())
+    print(df.head())
+
+    df_new = pd.DataFrame([['RUN UFG',run_ufg]],columns=['PARAMETER','VALUE'])
+
+    df = pd.concat([df, df_new], axis=0, ignore_index=True)
+    print(df.head())
     df.to_csv(join(output_data_dir, 'metadata.csv'), index=False) # write dataframe to csv
+
     #print(df.columns)
     # set some parameters which can be used later
     #year = df.loc[df['PARAMETER'] == 'YEAR', 'VALUE']
