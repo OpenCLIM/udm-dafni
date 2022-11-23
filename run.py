@@ -33,15 +33,8 @@ def find_metadata_files():
     for root, dirs, files in walk('/data/inputs'):
         print(root, files)
         for file in files:
-
-            # check if extension acceptable
-            extension = file.split('.')[-1]
-            print('checking extension of:', file)
-            if extension in suitable_extension_types:
-                # check if metadata text in file name
-                if 'metadata' in file:
-                    # file is good and what we are looking for
-                    files_.append(join(root, file))
+            if file == 'metadata.csv':
+                files_.append(join(root, file))
 
     print(files_)
     return files_
@@ -97,17 +90,17 @@ ssp = None
 print('Saving metadata file')
 if len(metadata_files) == 1: # if one metadata file found
     df = pd.read_csv(metadata_files[0]) # read in the file into a dataframe
-    print(df.head())
-    df.to_csv(join(output_data_dir, 'metadata.csv')) # write dataframe to csv
-    
+    #print(df.head())
+    df.to_csv(join(output_data_dir, 'metadata.csv'), index=False) # write dataframe to csv
+    #print(df.columns)
     # set some parameters which can be used later
-    year = df.loc[df['PARAMETER'] == 'YEAR', 'VALUE']
-    ssp = df.loc[df['PARAMETER'] == 'SSP', 'VALUE']
+    #year = df.loc[df['PARAMETER'] == 'YEAR', 'VALUE']
+    #ssp = df.loc[df['PARAMETER'] == 'SSP', 'VALUE']
     
 elif len(metadata_files) == 0:
     print('No metadata files found')
 else:
-    print('Multiple metadata files found. This functionality has not been addded yet')
+    print('Multiple metadata files found. This functionality has not been added yet')
 
 
 # run UDM
