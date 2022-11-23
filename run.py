@@ -84,6 +84,9 @@ elif run_ufg.lower() == 'true' or run_ufg == True:
 else:
     run_ufg = False
 
+# make output dir if not exists
+os.makedirs(output_data_dir, exist_ok=True)
+
 # check for any meta data files
 metadata_files = find_metadata_files() #search for any existing metadata files (expect to find at least one from the population data)
 print('Metadata files', metadata_files)
@@ -95,7 +98,7 @@ print('Saving metadata file')
 if len(metadata_files) == 1: # if one metadata file found
     df = pd.read_csv(metadata_files[0]) # read in the file into a dataframe
     print(df.head())
-    df.to_csv(join(output_data_dir, 'metadata.csv')) # write datadrame to csv
+    df.to_csv(join(output_data_dir, 'metadata.csv')) # write dataframe to csv
     
     # set some parameters which can be used later
     year = df.loc[df['PARAMETER'] == 'YEAR', 'VALUE']
@@ -115,8 +118,6 @@ print('*** Output files ***')
 print(find_files())
 
 # move files to output dir
-# make output dir if not exists
-os.makedirs(output_data_dir, exist_ok=True)
 
 # copy the listed output files to the output location
 files_to_copy = ['out_cell_dev.asc', 'out_cell_pph.asc', 'out_cell_dph.asc', 'out_cell_suit.asc', 'out_cell_overflow.csv']
