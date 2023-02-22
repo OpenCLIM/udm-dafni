@@ -200,13 +200,11 @@ with open(metadata_tbl) as csvfile:
     reader = csv.DictReader(csvfile)        
     for row in reader:        
         if row['PARAMETER'] == 'SSP':  
-            ssp = row['VALUE']          
+            ssp = row['VALUE'].lower()          
         elif row['PARAMETER'] == 'YEAR':
             year = row['VALUE']
-print(ssp)  
-print(year)   
-
-z_name1 = 'ssp' + ssp + '-' + year 
+ 
+z_name1 = ssp + '-' + year 
 print(z_name1)
 
 print( "Metadata file imported.")
